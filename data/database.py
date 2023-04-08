@@ -4,7 +4,7 @@ import sqlite3
 class Database:
     DB_NAME = "test.db"
 
-    def __init__(self):
+    def __init__(self, db_name):
         self.conn = None
 
     def connect(self):
