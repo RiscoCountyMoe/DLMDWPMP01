@@ -6,8 +6,8 @@ class TableTrain(Database):
         super().__init__(db_name)
 
     def create_train_table(self):
-        sql_train = """CREATE TABLE IF NOT EXISTS train (x FLOAT, y1 FLOAT, y2 FLOAT, y3 FLOAT, y4 FLOAT);"""
-        self.create_table(sql_train)
+        sql= """CREATE TABLE IF NOT EXISTS train (x FLOAT, y1 FLOAT, y2 FLOAT, y3 FLOAT, y4 FLOAT);"""
+        self.create_table(sql)
 
     def load_train_data(self, data):
         sql = """INSERT INTO train (x, y1, y2, y3, y4) VALUES (?, ?, ?, ?, ?);"""
