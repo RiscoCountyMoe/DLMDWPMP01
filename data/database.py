@@ -11,14 +11,33 @@ class Database:
         try:
             self.conn = sqlite3.connect(Database.DB_NAME)
             print("Verbindung zur Datenbank erfolgreich")
-        except sqlite3.Error as e:
-            print(e)
+        except sqlite3.Error as err:
+            print(err)
 
-    def create_table(self, sql):
-        cursor = self.conn.cursor()
-        cursor.execute(sql)
+    def disconnect(self):
+        if self.conn is not None:
+            self.conn.close()
+            print("Verbindung zur Datenbank geschlossen")
 
-    def load_data_to_table(self, sql, values):
-        cursor = self.conn.cursor()
-        cursor.executemany(sql, values)
-        self.conn.commit()
+    def create_table(self, table_name, sql):
+        try:
+            with sqlite3.connect(Database.DB_NAME) as conn:
+                cursor = conn.cursor()
+                cursor.execute(sql)
+                print(f"Tabelle '{table_name}' erfolgreich erstellt")
+        except sqlite3.Error as err:
+            print(err)
+        finally:
+            self.disconnect()
+
+    def load_data_to_table(self, table_name, sql, values):
+        try:
+            with sqlite3.connect(Database.DB_NAME) as conn:
+                cursor = conn.cursor()
+                cursor.executemany(sql, values)
+            print(f"Datensatz '{table_name}' erfolgreich geladen")
+        except sqlite3.Error as err:
+            print(err)
+        finally:
+            self.disconnect()
+
