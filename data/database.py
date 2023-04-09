@@ -40,4 +40,3 @@ class Database:
             print(err)
         finally:
             self.disconnect()
-

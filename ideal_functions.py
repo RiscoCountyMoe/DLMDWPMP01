@@ -4,6 +4,7 @@ from data.table_train import TableTrain
 from data.table_ideal import TableIdeal
 from data.table_test import TableTest
 from data.database import Database
+from model.linear_regression_model import LinearRegressionModel
 import numpy as np
 import pandas as pd
 
@@ -31,5 +32,9 @@ db_test = TableTest(Database.DB_NAME)
 db_test.connect()
 db_test.create_test_table()
 db_test.load_test_data(test_df)
+
+# train model with training data
+model = LinearRegressionModel()
+model.train_model()
 
 # create table "results" and insert result data from dataframe
