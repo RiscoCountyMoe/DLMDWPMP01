@@ -34,7 +34,7 @@ db_test.create_test_table()
 db_test.load_test_data(test_df)
 
 # train model with training data
-model = LinearRegressionModel()
+model = LinearRegressionModel(Database.DB_NAME)
 model.train_model()
 
 # create table "results" and insert result data from dataframe

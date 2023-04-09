@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from ..data.table_train import TableTrain
+from data.table_train import TableTrain
 from sklearn.linear_model import LinearRegression
 
 class LinearRegressionModel:

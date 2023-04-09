@@ -1,4 +1,5 @@
 import sqlite3
+import pandas as pd
 
 
 class Database:
@@ -40,3 +41,12 @@ class Database:
             print(err)
         finally:
             self.disconnect()
+
+    def load_table_to_dataframe(self, table_name):
+        try:
+            with sqlite3.connect(Database.DB_NAME) as conn:
+                sql = f"SELECT * FROM {table_name}"
+                df = pd.read_sql_query(sql, conn)
+                return df
+        except sqlite3.Error as err:
+            print(err)
