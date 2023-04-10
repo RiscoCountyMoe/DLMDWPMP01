@@ -4,7 +4,7 @@ from data.table_train import TableTrain
 from data.table_ideal import TableIdeal
 from data.table_test import TableTest
 from data.database import Database
-from model.linear_regression_model import LinearRegressionModel
+from model.best_function_finder import BestFunctionFinder
 import numpy as np
 import pandas as pd
 
@@ -33,8 +33,11 @@ db_test.connect()
 db_test.create_test_table()
 db_test.load_test_data(test_df)
 
-# train model with training data
-model = LinearRegressionModel(Database.DB_NAME)
-model.train_model()
+# train model with training data and calculate MSE
+finder = BestFunctionFinder(Database.DB_NAME)
+finder.find_best_function()
+
+results_sorted = finder.results.sort_values(by=['Best Function 1', 'Best Function 2', 'Best Function 3', 'Best Function 4'])
+print(results_sorted) 
 
 # create table "results" and insert result data from dataframe
