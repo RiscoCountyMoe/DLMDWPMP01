@@ -16,12 +16,15 @@ class BestFunctionFinder:
         self.results = pd.DataFrame()
 
     def find_best_function(self):
+        # train linear regression model with train dataset
+        best_functions = []
         for i in range(1, 5):
             x_train = self.train_df['x'].values.reshape(-1, 1)
             y_train = self.train_df[f'y{i}'].values.reshape(-1, 1)
             model = LinearRegression()
             model.fit(x_train, y_train)
 
+            # compare predicted values with values from ideal dataset and store in dataframe
             mse_df = pd.DataFrame({'Function': [], 'MSE': []})
             for j in range(1, 51):
                 y_ideal = self.ideal_df[f'y{j}'].values.reshape(-1, 1)
@@ -30,9 +33,12 @@ class BestFunctionFinder:
                 new_row = pd.DataFrame({'Function': [f'y{j}'], 'MSE': [mse]})
                 mse_df = pd.concat([mse_df, new_row], ignore_index=True)
 
+            # find functions with least MSE and save names into list 
             best_func = mse_df.loc[mse_df['MSE'].idxmin()]['Function']
+            best_functions.append(best_func)
 
-            self.results[f'Training Data {i}'] = mse_df['MSE']
-            self.results[f'Best Function {i}'] = best_func
+        # write those columns containg the data for the four best functions to new dataframe
+        best_func_values = self.ideal_df[best_functions]
 
-        return self.results
+        return best_func_values
+

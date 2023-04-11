@@ -33,11 +33,9 @@ db_test.connect()
 db_test.create_test_table()
 db_test.load_test_data(test_df)
 
-# train model with training data and calculate MSE
+# print dataframe containing the four best fit functions vom dataset ideal
 finder = BestFunctionFinder(Database.DB_NAME)
-finder.find_best_function()
+best_functions = finder.find_best_function()
 
-results_sorted = finder.results.sort_values(by=['Best Function 1', 'Best Function 2', 'Best Function 3', 'Best Function 4'])
-print(results_sorted) 
+print(best_functions)
 
-# create table "results" and insert result data from dataframe
