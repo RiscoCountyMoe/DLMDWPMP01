@@ -71,6 +71,4 @@ class TableIdeal(Database):
         self.load_data_to_table("Ideal", sql, values)
 
     def load_ideal_table_to_dataframe(self):
-        sql = """SELECT * FROM train;"""
-        df = pd.read_sql_query(sql, self.conn)
-        return df
+        return self.load_table_to_dataframe("ideal")
