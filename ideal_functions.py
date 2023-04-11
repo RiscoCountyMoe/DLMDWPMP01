@@ -38,4 +38,3 @@ finder = BestFunctionFinder(Database.DB_NAME)
 best_functions = finder.find_best_function()
 
 print(best_functions)
-
