@@ -4,6 +4,7 @@ from data.table_train import TableTrain
 from data.table_ideal import TableIdeal
 from data.table_test import TableTest
 from data.database import Database
+from data.table_results import ResultTable
 from model.best_function_finder import BestFunctionFinder
 import numpy as np
 import pandas as pd
@@ -32,6 +33,11 @@ db_test = TableTest(Database.DB_NAME)
 db_test.connect()
 db_test.create_test_table()
 db_test.load_test_data(test_df)
+
+# create table 'results'
+db_results = ResultTable(Database.DB_NAME)
+db_results.connect()
+db_results.create_test_table()
 
 # print dataframe containing the four best fit functions vom dataset ideal
 finder = BestFunctionFinder(Database.DB_NAME)
