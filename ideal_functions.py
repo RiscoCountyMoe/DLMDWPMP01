@@ -43,4 +43,7 @@ db_results.create_test_table()
 finder = BestFunctionFinder(Database.DB_NAME)
 best_functions = finder.find_best_function()
 
+results = finder.evaluate_test_data(best_functions)
+
 print(best_functions)
+print(results)
