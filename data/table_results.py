@@ -6,6 +6,11 @@ class ResultTable(Database):
     def __init__(self, db_name):
         super().__init__(db_name)
 
-    def create_test_table(self):
-        sql = """CREATE TABLE IF NOT EXISTS results (X VARCHAR(20), Y VARCHAR(20), 'Deviation' VARCHAR(20), 'Ideal Function' VARCHAR(20));"""
+    def create_result_table(self):
+        sql = """CREATE TABLE IF NOT EXISTS results (X VARCHAR(20), Y VARCHAR(20), 'Function' VARCHAR(20), 'Deviation' VARCHAR(20));"""
         self.create_table("Results", sql)
+
+    def load_result_data(self, data):
+        sql = """INSERT INTO results (x, y, 'function', 'deviation') VALUES (?, ?, ?, ?)"""
+        values = [(row["x"], row["y"], row["function"], row["deviation"]) for _, row in data.iterrows()]
+        self.load_data_to_table("Results", sql, values)

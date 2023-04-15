@@ -34,16 +34,17 @@ db_test.connect()
 db_test.create_test_table()
 db_test.load_test_data(test_df)
 
-# create table 'results'
-db_results = ResultTable(Database.DB_NAME)
-db_results.connect()
-db_results.create_test_table()
-
 # print dataframe containing the four best fit functions vom dataset ideal
 finder = BestFunctionFinder(Database.DB_NAME)
 best_functions = finder.find_best_function()
 
 results = finder.evaluate_test_data(best_functions)
 
-print(best_functions)
-print(results)
+#print(best_functions)
+#print(results)
+
+# create table 'results' and insert data from resulting dataframe
+db_results = ResultTable(Database.DB_NAME)
+db_results.connect()
+db_results.create_result_table()
+db_results.load_result_data(results)

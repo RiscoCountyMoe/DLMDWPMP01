@@ -42,7 +42,7 @@ class BestFunctionFinder:
 
         # write those columns containg the data for the four best functions to new dataframe
         best_func_values = self.ideal_df[best_functions].copy()
-        best_func_values = pd.concat([self.train_df['x'], best_func_values], axis=1)
+ #       best_func_values = pd.concat([self.train_df['x'], best_func_values], axis=1)
 
         return best_func_values
     
