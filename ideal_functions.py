@@ -4,6 +4,7 @@ from data.table_train import TableTrain
 from data.table_ideal import TableIdeal
 from data.table_test import TableTest
 from data.database import Database
+from data.table_results import ResultTable
 from model.best_function_finder import BestFunctionFinder
 import numpy as np
 import pandas as pd
@@ -37,4 +38,13 @@ db_test.load_test_data(test_df)
 finder = BestFunctionFinder(Database.DB_NAME)
 best_functions = finder.find_best_function()
 
-print(best_functions)
+results = finder.evaluate_test_data(best_functions)
+
+#print(best_functions)
+#print(results)
+
+# create table 'results' and insert data from resulting dataframe
+db_results = ResultTable(Database.DB_NAME)
+db_results.connect()
+db_results.create_result_table()
+db_results.load_result_data(results)

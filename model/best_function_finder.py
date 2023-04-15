@@ -4,6 +4,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 from data.table_train import TableTrain
 from data.table_ideal import TableIdeal
+from data.table_test import TableTest
 
 class BestFunctionFinder:
     def __init__(self, db_name):
@@ -13,7 +14,9 @@ class BestFunctionFinder:
         self.table_ideal = TableIdeal(db_name)
         self.ideal_df = self.table_ideal.load_ideal_table_to_dataframe()
 
-        self.results = pd.DataFrame()
+        self.table_test = TableTest(db_name)
+        self.test_df = self.table_test.load_test_table_to_dataframe()
+
 
     def find_best_function(self):
         # train linear regression model with train dataset
@@ -39,7 +42,37 @@ class BestFunctionFinder:
 
         # write those columns containg the data for the four best functions to new dataframe
         best_func_values = self.ideal_df[best_functions].copy()
-        best_func_values = pd.concat([self.train_df['x'], best_func_values], axis=1)
+ #       best_func_values = pd.concat([self.train_df['x'], best_func_values], axis=1)
 
         return best_func_values
+    
 
+    def evaluate_test_data(self, best_func_values, max_deviation_factor=np.sqrt(2)):
+        # create empty DataFrame to store evaluation results
+        evaluation_results = pd.DataFrame(columns=['x', 'y', 'function', 'deviation'])
+
+        best_func_columns = best_func_values.columns.tolist()
+
+        # iterate over test dataset
+        for i in range(len(self.test_df)):
+            x_test = self.test_df.loc[i]['x']
+            y_test = self.test_df.loc[i]['y']
+
+            # iterate over the columns in best_func_values
+            for col_name in best_func_columns:
+                y_pred = best_func_values.loc[i][col_name]
+                deviation = abs(y_test - y_pred)
+
+                # check if deviation exceeds the maximum allowed deviation
+                max_deviation = max_deviation_factor * best_func_values[col_name].std()
+                if deviation <= max_deviation:
+                    df = pd.DataFrame({
+                    'x': [x_test],
+                    'y': [y_test],
+                    'function': [col_name],
+                    'deviation': [deviation]
+                    })
+                    evaluation_results = pd.concat([evaluation_results, df], ignore_index=True)
+                    break
+
+        return evaluation_results
