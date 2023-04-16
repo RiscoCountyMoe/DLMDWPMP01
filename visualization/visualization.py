@@ -54,15 +54,17 @@ class Visualization:
 
         plt.show()
 
-# hier stimmt was nicht und ich kapiere es nicht!
+# hier stimmt was nicht und ich kapiere es nicht! siehe Jupyter notebook, da ist es perfekt!
     def plot_result_data(self):
-        # Scatterplot erstellen
-        sns.scatterplot(x='X', y='Y', hue='Function', data=self.results)
-
+       # Scatterplot erstellen
+        sns.scatterplot(x='X', y='Y', hue='Function', data=results)
+        # Deviation als Fehlerbalken hinzufügen
+        deviations = results['Deviation']
+        plt.errorbar(results['X'], results['Y'], yerr=deviations, fmt='none', ecolor='gray')
         # Linienplot erstellen
         for i in range(1, 5):
             column_name = 'y{}'.format(i)
-            sns.lineplot(x='x', y=column_name, data=self.train_df)
+            sns.lineplot(x='x', y=column_name, data=train_df)
     
         # Achsenbeschriftungen
         plt.xlabel('x')
@@ -73,3 +75,4 @@ class Visualization:
 
         # Diagramm anzeigen
         plt.show()
+
