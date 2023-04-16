@@ -3,8 +3,9 @@ import sys
 from data.table_train import TableTrain
 from data.table_ideal import TableIdeal
 from data.table_test import TableTest
-from data.database import Database
 from data.table_results import ResultTable
+from data.database import Database
+from visualization.visualization import Visualization
 from model.best_function_finder import BestFunctionFinder
 import numpy as np
 import pandas as pd
@@ -48,3 +49,7 @@ db_results = ResultTable(Database.DB_NAME)
 db_results.connect()
 db_results.create_result_table()
 db_results.load_result_data(results)
+
+# show train_df plot
+visualization = Visualization(Database.DB_NAME)
+visualization.plot_train_data()

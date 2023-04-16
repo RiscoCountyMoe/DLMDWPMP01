@@ -16,3 +16,23 @@ class Visualization:
 
         self.table_test = TableTest(db_name)
         self.test_df = self.table_test.load_test_table_to_dataframe()
+
+    def plot_train_data(self):
+        for i in range(1, 5):
+            column_name = 'y{}'.format(i)
+            sns.scatterplot(x='x', y=column_name, data=self.train_df)
+
+        plt.title('Training data')
+        plt.xlabel('x')
+        plt.ylabel('y')
+
+        plt.show()
+
+    def plot_test_data(self):
+        sns.scatterplot(x='x', y='y', data=self.test_df)
+
+        plt.title('Test data')
+        plt.xlabel('x')
+        plt.ylabel('y')
+
+        plt.show()
