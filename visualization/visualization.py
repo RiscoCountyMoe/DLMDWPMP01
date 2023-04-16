@@ -18,10 +18,13 @@ class Visualization:
         self.table_test = TableTest(db_name)
         self.test_df = self.table_test.load_test_table_to_dataframe()
 
+        self.table_results = ResultTable(db_name)
+        self.results = self.table_results.load_result_table_to_dataframe()
+
     def plot_train_data(self):
         for i in range(1, 5):
             column_name = "y{}".format(i)
-            sns.scatterplot(x="x", y=column_name, data=self.train_df)
+            sns.lineplot(x="x", y=column_name, data=self.train_df)
 
         plt.title("Training data")
         plt.xlabel("x")
@@ -36,4 +39,37 @@ class Visualization:
         plt.xlabel("x")
         plt.ylabel("y")
 
+        plt.show()
+
+    def plot_ideal_data(self):
+        for i in range(1, 51):
+            column_name = 'y{}'.format(i)
+            sns.lineplot(x='x', y=column_name, data=self.ideal_df)
+    
+        plt.title('Ideal functions')
+        plt.xlabel('x')
+        plt.ylabel('y')
+    
+        plt.ylim(-30, 110)
+
+        plt.show()
+
+# hier stimmt was nicht und ich kapiere es nicht!
+    def plot_result_data(self):
+        # Scatterplot erstellen
+        sns.scatterplot(x='X', y='Y', hue='Function', data=self.results)
+
+        # Linienplot erstellen
+        for i in range(1, 5):
+            column_name = 'y{}'.format(i)
+            sns.lineplot(x='x', y=column_name, data=self.train_df)
+    
+        # Achsenbeschriftungen
+        plt.xlabel('x')
+        plt.ylabel('y')
+
+        # Legende erstellen
+        plt.legend()
+
+        # Diagramm anzeigen
         plt.show()

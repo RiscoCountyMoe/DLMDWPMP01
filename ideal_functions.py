@@ -53,3 +53,12 @@ db_results.load_result_data(results)
 # show train_df plot
 visualization = Visualization(Database.DB_NAME)
 visualization.plot_train_data()
+
+# show test_df plot
+visualization.plot_test_data()
+
+# show ideal_df plot
+visualization.plot_ideal_data()
+
+# show results
+visualization.plot_result_data()
