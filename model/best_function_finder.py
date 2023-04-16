@@ -52,6 +52,13 @@ class BestFunctionFinder:
         evaluation_results = pd.DataFrame(columns=['x', 'y', 'function', 'deviation'])
 
         best_func_columns = best_func_values.columns.tolist()
+        new_train_df = self.train_df[['x', 'y1', 'y2', 'y3', 'y4']].copy()
+
+        # Benenne die Spalten entsprechend der Funktionen in best_func_values um
+        new_train_df = new_train_df.rename(columns={'y1': best_func_values.columns[0],
+                                            'y2': best_func_values.columns[1],
+                                            'y3': best_func_values.columns[2],
+                                            'y4': best_func_values.columns[3]})
 
         # iterate over test dataset
         for i in range(len(self.test_df)):
@@ -64,7 +71,7 @@ class BestFunctionFinder:
                 deviation = abs(y_test - y_pred)
 
                 # check if deviation exceeds the maximum allowed deviation
-                max_deviation = max_deviation_factor * best_func_values[col_name].std()
+                max_deviation = max_deviation_factor * new_train_df[col_name].std()
                 if deviation <= max_deviation:
                     df = pd.DataFrame({
                     'x': [x_test],
