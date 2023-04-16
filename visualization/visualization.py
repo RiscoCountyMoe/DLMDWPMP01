@@ -6,6 +6,7 @@ from data.table_ideal import TableIdeal
 from data.table_test import TableTest
 from data.table_results import ResultTable
 
+
 class Visualization:
     def __init__(self, db_name):
         self.table_train = TableTrain(db_name)
@@ -19,20 +20,20 @@ class Visualization:
 
     def plot_train_data(self):
         for i in range(1, 5):
-            column_name = 'y{}'.format(i)
-            sns.scatterplot(x='x', y=column_name, data=self.train_df)
+            column_name = "y{}".format(i)
+            sns.scatterplot(x="x", y=column_name, data=self.train_df)
 
-        plt.title('Training data')
-        plt.xlabel('x')
-        plt.ylabel('y')
+        plt.title("Training data")
+        plt.xlabel("x")
+        plt.ylabel("y")
 
         plt.show()
 
     def plot_test_data(self):
-        sns.scatterplot(x='x', y='y', data=self.test_df)
+        sns.scatterplot(x="x", y="y", data=self.test_df)
 
-        plt.title('Test data')
-        plt.xlabel('x')
-        plt.ylabel('y')
+        plt.title("Test data")
+        plt.xlabel("x")
+        plt.ylabel("y")
 
         plt.show()
