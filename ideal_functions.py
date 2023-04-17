@@ -7,7 +7,6 @@ from data.table_results import ResultTable
 from data.database import Database
 from visualization.visualization import Visualization
 from model.best_function_finder import BestFunctionFinder
-import numpy as np
 import pandas as pd
 
 # create and connect to database
@@ -49,7 +48,7 @@ db_results.load_result_data(results)
 
 # show train_df plot
 visualization = Visualization(Database.DB_NAME)
-visualization.plot_train_data()
+visualization.plot_all()
 
 # show test_df plot
 visualization.plot_test_data()
@@ -57,5 +56,5 @@ visualization.plot_test_data()
 # show ideal_df plot
 visualization.plot_ideal_data()
 
-# show results
+# show resulting mapping of data points and functions with error bars
 visualization.plot_result_data()

@@ -43,27 +43,37 @@ class Visualization:
 
     def plot_ideal_data(self):
         for i in range(1, 51):
-            column_name = 'y{}'.format(i)
-            sns.lineplot(x='x', y=column_name, data=self.ideal_df)
-    
-        plt.title('Ideal functions')
-        plt.xlabel('x')
-        plt.ylabel('y')
-    
+            column_name = "y{}".format(i)
+            sns.lineplot(x="x", y=column_name, data=self.ideal_df)
+
+        plt.title("Ideal functions")
+        plt.xlabel("x")
+        plt.ylabel("y")
+
         plt.ylim(-30, 110)
 
         plt.show()
 
-# hier stimmt was nicht und ich kapiere es nicht! siehe Jupyter notebook, da ist es perfekt!
+    # hier stimmt was nicht und ich kapiere es nicht! siehe Jupyter notebook, da ist es perfekt!
     def plot_result_data(self):
-        sns.scatterplot(x='X', y='Y', hue='Function', data=self.results)
+        sns.scatterplot(x="X", y="Y", hue="Function", data=self.results)
 
-        plt.xlabel('X')
-        plt.ylabel('Y')
+        deviations = self.results["Deviation"]
+        plt.errorbar(
+            self.results["X"],
+            self.results["Y"],
+            yerr=deviations,
+            fmt="none",
+            ecolor="gray",
+        )
+        # Linienplot erstellen
+        for i in range(1, 5):
+            column_name = "y{}".format(i)
+            sns.lineplot(x="x", y=column_name, data=self.train_df)
+
+        plt.xlabel("X")
+        plt.ylabel("Y")
 
         plt.legend()
 
         plt.show()
-
-
-
