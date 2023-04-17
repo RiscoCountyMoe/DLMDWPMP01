@@ -7,7 +7,7 @@ class ResultTable(Database):
         super().__init__(db_name)
 
     def create_result_table(self):
-        sql = """CREATE TABLE IF NOT EXISTS results (X VARCHAR(20), Y VARCHAR(20), 'Function' VARCHAR(20), 'Deviation' VARCHAR(20));"""
+        sql = """CREATE TABLE IF NOT EXISTS results (X FLOAT, Y FLOAT, 'Function' VARCHAR(20), 'Deviation' FLOAT);"""
         self.create_table("Results", sql)
 
     def load_result_data(self, data):

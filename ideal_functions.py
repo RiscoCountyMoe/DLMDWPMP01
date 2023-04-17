@@ -41,9 +41,6 @@ best_functions = finder.find_best_function()
 
 results = finder.evaluate_test_data(best_functions)
 
-# print(best_functions)
-# print(results)
-
 # create table 'results' and insert data from resulting dataframe
 db_results = ResultTable(Database.DB_NAME)
 db_results.connect()
