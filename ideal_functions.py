@@ -3,10 +3,10 @@ import sys
 from data.table_train import TableTrain
 from data.table_ideal import TableIdeal
 from data.table_test import TableTest
-from data.database import Database
 from data.table_results import ResultTable
+from data.database import Database
+from visualization.visualization import Visualization
 from model.best_function_finder import BestFunctionFinder
-import numpy as np
 import pandas as pd
 
 # create and connect to database
@@ -40,11 +40,21 @@ best_functions = finder.find_best_function()
 
 results = finder.evaluate_test_data(best_functions)
 
-#print(best_functions)
-#print(results)
-
 # create table 'results' and insert data from resulting dataframe
 db_results = ResultTable(Database.DB_NAME)
 db_results.connect()
 db_results.create_result_table()
 db_results.load_result_data(results)
+
+# show train_df plot
+visualization = Visualization(Database.DB_NAME)
+visualization.plot_all()
+
+# show test_df plot
+visualization.plot_test_data()
+
+# show ideal_df plot
+visualization.plot_ideal_data()
+
+# show resulting mapping of data points and functions with error bars
+visualization.plot_result_data()

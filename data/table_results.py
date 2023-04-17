@@ -7,10 +7,16 @@ class ResultTable(Database):
         super().__init__(db_name)
 
     def create_result_table(self):
-        sql = """CREATE TABLE IF NOT EXISTS results (X VARCHAR(20), Y VARCHAR(20), 'Function' VARCHAR(20), 'Deviation' VARCHAR(20));"""
+        sql = """CREATE TABLE IF NOT EXISTS results (X FLOAT, Y FLOAT, 'Function' VARCHAR(20), 'Deviation' FLOAT);"""
         self.create_table("Results", sql)
 
     def load_result_data(self, data):
         sql = """INSERT INTO results (x, y, 'function', 'deviation') VALUES (?, ?, ?, ?)"""
-        values = [(row["x"], row["y"], row["function"], row["deviation"]) for _, row in data.iterrows()]
+        values = [
+            (row["x"], row["y"], row["function"], row["deviation"])
+            for _, row in data.iterrows()
+        ]
         self.load_data_to_table("Results", sql, values)
+
+    def load_result_table_to_dataframe(self):
+        return self.load_table_to_dataframe("results")
