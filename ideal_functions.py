@@ -32,6 +32,7 @@ def create_tables(db):
     db_test.create_test_table()
     db_test.load_test_data(test_df)
 
+
 def find_best_functions(db):
     # print dataframe containing the four best fit functions vom dataset ideal
     finder = BestFunctionFinder(Database.DB_NAME)
@@ -45,28 +46,31 @@ def find_best_functions(db):
     db_results.create_result_table()
     db_results.load_result_data(results)
 
+
 def visualize_data(db):
     # show train_df plot
     visualization = Visualization(Database.DB_NAME)
-  #  visualization.plot_train_data()
+    #  visualization.plot_train_data()
 
     # show test_df plot
-  #  visualization.plot_test_data()
+    #  visualization.plot_test_data()
 
     # show ideal_df plot
-  #  visualization.plot_ideal_data()
+    #  visualization.plot_ideal_data()
 
     # show resulting mapping of data points and functions with error bars
     visualization.plot_result_data()
+
 
 def main():
     # create and connect to database
     db = Database(Database.DB_NAME)
     db.connect()
 
-  #  create_tables(db)
-  #  find_best_functions(db)
+    #  create_tables(db)
+    #  find_best_functions(db)
     visualize_data(db)
+
 
 if __name__ == "__main__":
     main()
