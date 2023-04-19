@@ -30,6 +30,8 @@ class Visualization:
         plt.xlabel("x")
         plt.ylabel("y")
 
+        plt.savefig("training_data.png")
+
         plt.show()
 
     def plot_test_data(self):
@@ -38,6 +40,8 @@ class Visualization:
         plt.title("Test data")
         plt.xlabel("x")
         plt.ylabel("y")
+
+        plt.savefig("test_data.png")
 
         plt.show()
 
@@ -52,9 +56,10 @@ class Visualization:
 
         plt.ylim(-30, 110)
 
+        plt.savefig("ideal_functions.png")
+
         plt.show()
 
-    # hier stimmt was nicht und ich kapiere es nicht! siehe Jupyter notebook, da ist es perfekt!
     def plot_result_data(self):
         sns.scatterplot(x="X", y="Y", hue="Function", data=self.results)
 
@@ -66,14 +71,15 @@ class Visualization:
             fmt="none",
             ecolor="gray",
         )
-        # Linienplot erstellen
+
         for i in range(1, 5):
             column_name = "y{}".format(i)
             sns.lineplot(x="x", y=column_name, data=self.train_df)
 
         plt.xlabel("X")
         plt.ylabel("Y")
-
         plt.legend()
+
+        plt.savefig("results.png")
 
         plt.show()
