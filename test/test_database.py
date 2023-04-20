@@ -2,6 +2,7 @@ import sqlite3
 import unittest
 from data.database import Database
 
+
 class TestDatabase(unittest.TestCase):
     DB_NAME = "test.db"
 
@@ -20,14 +21,14 @@ class TestDatabase(unittest.TestCase):
         table_name = "test_table"
         sql = f"CREATE TABLE {table_name} (id INTEGER PRIMARY KEY, name TEXT)"
 
-        # Call the method to create the table
         self.db.create_table(table_name, sql)
 
-        # Open a new connection to check if the table was created
         with sqlite3.connect(TestDatabase.DB_NAME) as conn:
             cursor = conn.cursor()
-            cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name=?", (table_name,))
+            cursor.execute(
+                "SELECT name FROM sqlite_master WHERE type='table' AND name=?",
+                (table_name,),
+            )
             result = cursor.fetchone()
 
-        self.assertIsNotNone(result) # table exists in the database
-
+        self.assertIsNotNone(result)

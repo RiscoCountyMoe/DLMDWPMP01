@@ -50,13 +50,13 @@ def find_best_functions(db):
 def visualize_data(db):
     # show train_df plot
     visualization = Visualization(Database.DB_NAME)
-    #  visualization.plot_train_data()
+    visualization.plot_train_data()
 
     # show test_df plot
-    #  visualization.plot_test_data()
+    visualization.plot_test_data()
 
     # show ideal_df plot
-    #  visualization.plot_ideal_data()
+    visualization.plot_ideal_data()
 
     # show resulting mapping of data points and functions with error bars
     visualization.plot_result_data()
@@ -67,8 +67,8 @@ def main():
     db = Database(Database.DB_NAME)
     db.connect()
 
-    #  create_tables(db)
-    #  find_best_functions(db)
+    create_tables(db)
+    find_best_functions(db)
     visualize_data(db)
 
 

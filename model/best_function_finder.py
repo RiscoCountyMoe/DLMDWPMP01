@@ -19,7 +19,7 @@ class BestFunctionFinder:
         self.test_df = self.table_test.load_test_table_to_dataframe()
 
     def find_best_function(self):
-        # train linear regression model with train dataset
+        # train linear regression model with training functions from train dataset
         best_functions = []
         for i in range(1, 5):
             x_train = self.train_df["x"].values.reshape(-1, 1)
@@ -27,7 +27,7 @@ class BestFunctionFinder:
             model = LinearRegression()
             model.fit(x_train, y_train)
 
-            # compare predicted values with values from ideal dataset and store in dataframe
+            # compare predicted values with values from ideal dataset and store function with mean squared error in dataframe
             mse_df = pd.DataFrame({"Function": [], "MSE": []})
             for j in range(1, 51):
                 y_ideal = self.ideal_df[f"y{j}"].values.reshape(-1, 1)
@@ -40,9 +40,8 @@ class BestFunctionFinder:
             best_func = mse_df.loc[mse_df["MSE"].idxmin()]["Function"]
             best_functions.append(best_func)
 
-        # write those columns containg the data for the four best functions to new dataframe
+        # write those columns containg the data for the four best fitting functions to new dataframe
         best_func_values = self.ideal_df[best_functions].copy()
-        #       best_func_values = pd.concat([self.train_df['x'], best_func_values], axis=1)
 
         return best_func_values
 
@@ -51,9 +50,10 @@ class BestFunctionFinder:
         evaluation_results = pd.DataFrame(columns=["x", "y", "function", "deviation"])
 
         best_func_columns = best_func_values.columns.tolist()
+
+        # copy functions from training data set and rename according to names of best fitting functions
         new_train_df = self.train_df[["x", "y1", "y2", "y3", "y4"]].copy()
 
-        # Benenne die Spalten entsprechend der Funktionen in best_func_values um
         new_train_df = new_train_df.rename(
             columns={
                 "y1": best_func_values.columns[0],
