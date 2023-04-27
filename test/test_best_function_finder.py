@@ -27,7 +27,7 @@ class TestBestFunctionFinder(unittest.TestCase):
 
         test_data = {
             "x": [1, 2, 3, 4, 5],
-            "y": [3, 4, 5, 6, 7],
+            "y": [2, 3, 4, 5, 6],
         }
         self.test_df = pd.DataFrame(test_data)
 
@@ -43,13 +43,15 @@ class TestBestFunctionFinder(unittest.TestCase):
         finder = BestFunctionFinder("db_name")
         finder.train_df = self.train_df
         finder.ideal_df = self.ideal_df
+        finder.test_df = self.test_df
         best_func_values = finder.find_best_function()
-        evaluation_results = finder.evaluate_test_data(best_func_values, self.test_df)
-        expected_results = pd.DataFrame({
-            "x": [1, 2, 3, 4, 5],
-            "y": [3, 4, 5, 6, 7],
-            "function": ["y2", "y2", "y2", "y2", "y2"],
-            "deviation": [0, 0, 0, 0, 0]
-        })
-        pd.testing.assert_frame_equal(evaluation_results, expected_results)
 
+
+        evaluation_results = finder.evaluate_test_data(best_func_values, max_deviation_factor=np.sqrt(2))
+        expected_y = [2, 3, 4, 5, 6]
+        expected_function = ["y1", "y1", "y1", "y1", "y1"]
+        expected_deviation = [0, 0, 0, 0, 0]
+
+        self.assertListEqual(evaluation_results["y"].tolist(), expected_y)
+        self.assertListEqual(evaluation_results["function"].tolist(), expected_function)
+        self.assertListEqual(evaluation_results["deviation"].tolist(), expected_deviation)
