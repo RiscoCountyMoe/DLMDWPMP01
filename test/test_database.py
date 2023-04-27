@@ -19,7 +19,7 @@ class TestDatabase(unittest.TestCase):
 
     def test_create_table(self):
         table_name = "test_table"
-        sql = f"CREATE TABLE {table_name} (id INTEGER PRIMARY KEY, name TEXT)"
+        sql = f"CREATE TABLE {table_name} (id INTEGER PRIMARY KEY, column TEXT)"
 
         self.db.create_table(table_name, sql)
 
