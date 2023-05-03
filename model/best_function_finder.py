@@ -21,7 +21,7 @@ class BestFunctionFinder:
     def find_best_function(self):
         # train linear regression model with training functions from train dataset
         best_functions = []
-        num_cols = len(self.train_df.columns) - 1  # Subtract 1 for the 'x' column
+        num_cols = len(self.train_df.columns) - 1  # Subtract 1 for 'x' column
         for i in range(1, num_cols+1):
             x_train = self.train_df["x"].values.reshape(-1, 1)
             y_train = self.train_df.iloc[:, i].values.reshape(-1, 1)
@@ -30,8 +30,7 @@ class BestFunctionFinder:
 
             # compare predicted values with values from ideal dataset and store function with mean squared error in dataframe
             mse_df = pd.DataFrame({"Function": [], "MSE": []})
-            num_rows = len(self.ideal_df)
-            for col in self.ideal_df.columns[1:]:  # start at index 1 to exclude the 'x' column
+            for col in self.ideal_df.columns[1:]:  # start at index 1 to exclude 'x' column
                 y_ideal = self.ideal_df[col].values.reshape(-1, 1)
                 y_pred = model.predict(x_train)
                 mse = mean_squared_error(y_ideal, y_pred)
@@ -74,7 +73,7 @@ class BestFunctionFinder:
                 y_pred = best_func_values.loc[i][col_name]
                 deviation = abs(y_test - y_pred)
 
-                # check if deviation exceeds the maximum allowed deviation
+                # check if deviation exceeds the maximum allowed deviation and store results in dataframe
                 max_deviation = max_deviation_factor * new_train_df[col_name].std()
                 if deviation <= max_deviation:
                     df = pd.DataFrame(
