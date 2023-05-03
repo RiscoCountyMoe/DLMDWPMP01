@@ -21,21 +21,21 @@ class BestFunctionFinder:
     def find_best_function(self):
         # train linear regression model with training functions from train dataset
         best_functions = []
-        for i in range(1, 5):
+        num_cols = len(self.train_df.columns) - 1  # Subtract 1 for 'x' column
+        for i in range(1, num_cols+1):
             x_train = self.train_df["x"].values.reshape(-1, 1)
-            y_train = self.train_df[f"y{i}"].values.reshape(-1, 1)
+            y_train = self.train_df.iloc[:, i].values.reshape(-1, 1)
             model = LinearRegression()
             model.fit(x_train, y_train)
 
             # compare predicted values with values from ideal dataset and store function with mean squared error in dataframe
             mse_df = pd.DataFrame({"Function": [], "MSE": []})
-            for j in range(1, 51):
-                y_ideal = self.ideal_df[f"y{j}"].values.reshape(-1, 1)
+            for col in self.ideal_df.columns[1:]:  # start at index 1 to exclude 'x' column
+                y_ideal = self.ideal_df[col].values.reshape(-1, 1)
                 y_pred = model.predict(x_train)
                 mse = mean_squared_error(y_ideal, y_pred)
-                new_row = pd.DataFrame({"Function": [f"y{j}"], "MSE": [mse]})
+                new_row = pd.DataFrame({"Function": [col], "MSE": [mse]})
                 mse_df = pd.concat([mse_df, new_row], ignore_index=True)
-
             # find functions with least MSE and save names into list
             best_func = mse_df.loc[mse_df["MSE"].idxmin()]["Function"]
             best_functions.append(best_func)
@@ -73,7 +73,7 @@ class BestFunctionFinder:
                 y_pred = best_func_values.loc[i][col_name]
                 deviation = abs(y_test - y_pred)
 
-                # check if deviation exceeds the maximum allowed deviation
+                # check if deviation exceeds the maximum allowed deviation and store results in dataframe
                 max_deviation = max_deviation_factor * new_train_df[col_name].std()
                 if deviation <= max_deviation:
                     df = pd.DataFrame(
