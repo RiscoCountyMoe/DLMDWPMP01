@@ -3,7 +3,7 @@ import pandas as pd
 
 
 class Database:
-    DB_NAME = "test.db"
+    DB_NAME = "DLMDWPMP01.db"
 
     def __init__(self, db_name):
         self.conn = None
