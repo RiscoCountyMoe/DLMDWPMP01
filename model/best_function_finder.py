@@ -22,7 +22,7 @@ class BestFunctionFinder:
         # train linear regression model with training functions from train dataset
         best_functions = []
         num_cols = len(self.train_df.columns) - 1  # Subtract 1 for 'x' column
-        for i in range(1, num_cols+1):
+        for i in range(1, num_cols + 1):
             x_train = self.train_df["x"].values.reshape(-1, 1)
             y_train = self.train_df.iloc[:, i].values.reshape(-1, 1)
             model = LinearRegression()
@@ -30,7 +30,9 @@ class BestFunctionFinder:
 
             # compare predicted values with values from ideal dataset and store function with mean squared error in dataframe
             mse_df = pd.DataFrame({"Function": [], "MSE": []})
-            for col in self.ideal_df.columns[1:]:  # start at index 1 to exclude 'x' column
+            for col in self.ideal_df.columns[
+                1:
+            ]:  # start at index 1 to exclude 'x' column
                 y_ideal = self.ideal_df[col].values.reshape(-1, 1)
                 y_pred = model.predict(x_train)
                 mse = mean_squared_error(y_ideal, y_pred)

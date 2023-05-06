@@ -46,12 +46,15 @@ class TestBestFunctionFinder(unittest.TestCase):
         finder.test_df = self.test_df
         best_func_values = finder.find_best_function()
 
-
-        evaluation_results = finder.evaluate_test_data(best_func_values, max_deviation_factor=np.sqrt(2))
+        evaluation_results = finder.evaluate_test_data(
+            best_func_values, max_deviation_factor=np.sqrt(2)
+        )
         expected_y = [2, 3, 4, 5, 6]
         expected_function = ["y1", "y1", "y1", "y1", "y1"]
         expected_deviation = [0, 0, 0, 0, 0]
 
         self.assertListEqual(evaluation_results["y"].tolist(), expected_y)
         self.assertListEqual(evaluation_results["function"].tolist(), expected_function)
-        self.assertListEqual(evaluation_results["deviation"].tolist(), expected_deviation)
+        self.assertListEqual(
+            evaluation_results["deviation"].tolist(), expected_deviation
+        )
