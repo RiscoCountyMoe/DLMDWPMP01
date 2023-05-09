@@ -8,6 +8,30 @@ from data.table_test import TableTest
 
 
 class BestFunctionFinder:
+    """
+    This class finds the functions that fit best a given training dataset using linear regression and evaluates them
+    using a test dataset.
+
+    Parameters:
+    -----------
+    db_name : str
+        The name of the database containing the training, ideal and test datasets.
+
+    Attributes:
+    -----------
+    table_train : TableTrain object
+        The object representing the training dataset.
+    train_df : pandas DataFrame
+        The training dataset as a pandas DataFrame.
+    table_ideal : TableIdeal object
+        The object representing the ideal dataset.
+    ideal_df : pandas DataFrame
+        The ideal dataset as a pandas DataFrame.
+    table_test : TableTest object
+        The object representing the test dataset.
+    test_df : pandas DataFrame
+        The test dataset as a pandas DataFrame.
+    """
     def __init__(self, db_name):
         self.table_train = TableTrain(db_name)
         self.train_df = self.table_train.load_train_table_to_dataframe()
@@ -19,6 +43,12 @@ class BestFunctionFinder:
         self.test_df = self.table_test.load_test_table_to_dataframe()
 
     def find_best_function(self):
+        """
+        Finds the four best fitting functions using linear regression and mean squared error.
+
+        Returns:
+        pandas.DataFrame: DataFrame containing the data for the four best fitting functions.
+        """
         # train linear regression model with training functions from train dataset
         best_functions = []
         num_cols = len(self.train_df.columns) - 1  # Subtract 1 for 'x' column
@@ -48,6 +78,16 @@ class BestFunctionFinder:
         return best_func_values
 
     def evaluate_test_data(self, best_func_values, max_deviation_factor=np.sqrt(2)):
+        """
+        Evaluates the test data using the four best fitting functions and returns the evaluation results.
+
+        Args:
+        best_func_values (pandas.DataFrame): DataFrame containing the data for the four best fitting functions.
+        max_deviation_factor (float, optional): The maximum deviation factor allowed.
+
+        Returns:
+        pandas.DataFrame: DataFrame containing the evaluation results.
+        """
         # create empty DataFrame to store evaluation results
         evaluation_results = pd.DataFrame(columns=["x", "y", "function", "deviation"])
 
