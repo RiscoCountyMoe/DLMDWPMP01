@@ -25,6 +25,7 @@ class Database:
             with sqlite3.connect(Database.DB_NAME) as conn:
                 cursor = conn.cursor()
                 cursor.execute(sql)
+                conn.commit()
                 print(f"Tabelle '{table_name}' erfolgreich erstellt")
         except sqlite3.Error as err:
             print(err)
@@ -36,6 +37,7 @@ class Database:
             with sqlite3.connect(Database.DB_NAME) as conn:
                 cursor = conn.cursor()
                 cursor.executemany(sql, values)
+                conn.commit()
             print(f"Datensatz '{table_name}' erfolgreich geladen")
         except sqlite3.Error as err:
             print(err)
